@@ -37,6 +37,12 @@ This is done on the MNIST dataset where computing the Jacobian is tractable. Eve
 In `stable-diffusion/jacobian_exact_vs_gd.ipynb` we demonstrate the qualitative differences between the proposed inexact Newton step and gradient descent.
 Theoretically, the denoiser Jacobian should be symmetric, making the two update directions equivalent. In practice, we find fundamental differences between the two directions. The inexact Newton direction retains shapes better and shows stronger global coherency.
 
+### Convergence
+<img src="assets/error_convergence.png" alt="error_convergence" width="400"/>
+
+We provide the code to perform our convergence analysis in `stable-diffusion/jacobian_analysis.ipynb`. We use the [Arnoldi Iteration](https://en.wikipedia.org/wiki/Arnoldi_iteration) to compute the eigenvalues of the Jacobian (and its symmetric and skew-symmetric versions).
+Using the maximum computed eigenvalue, we test the convergence of different learning rates, showing that our dynamic $\infty$-norm scaling learning rate achieves the best result.
+
 ## Inexact Newton for VAEs
 In `stable-diffusion/superres_vae_newton.ipynb` we show an implementation of super-resolution that also avoids backpropagating through the Stable Diffusion decoder using a second Newton approximation in the VAE space.
 This is a central idea of our paper [ZoomLDM](https://github.com/cvlab-stonybrook/ZoomLDM), where backpropagating through the VAE is prohibitive due to memory constraints.
